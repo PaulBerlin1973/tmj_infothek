@@ -412,32 +412,41 @@ function EventsView({events,meinBezirk,onDelete}){
 function FeedbackView(){
   const [form,setForm]=React.useState({name:"",kategorie:"Verbesserungsvorschlag",text:""});
   const [sent,setSent]=React.useState(false);
+  const [sending,setSending]=React.useState(false);
+  const [error,setError]=React.useState("");
   const set=(f,v)=>setForm(x=>({...x,[f]:v}));
   const inp={width:"100%",padding:"8px 10px",border:"1px solid #D8D2C8",borderRadius:6,background:"#F0EDE8",fontSize:13,outline:"none",boxSizing:"border-box"};
   const lbl={display:"block",fontSize:11,fontWeight:700,color:"#7A736A",textTransform:"uppercase",marginBottom:4,marginTop:12};
 
-  const handleSend=()=>{
+  const handleSend=async()=>{
     if(!form.text.trim())return alert("Bitte Feedback eingeben.");
-    const subject=encodeURIComponent("Tamaja Infothek Feedback: "+form.kategorie);
-    const body=encodeURIComponent(
-      "Kategorie: "+form.kategorie+"\n"+
-      (form.name?"Von: "+form.name+"\n":"")+
-      "\n"+form.text
-    );
-    window.location.href="mailto:michael.graebner@tamaja.de?subject="+subject+"&body="+body;
-    setSent(true);
+    setSending(true);setError("");
+    try{
+      const{error:err}=await sb.from("feedback").insert({
+        kategorie:form.kategorie,
+        text:form.text,
+        name:form.name||null
+      });
+      if(err)throw new Error(err.message);
+      setSent(true);
+      setForm({name:"",kategorie:"Verbesserungsvorschlag",text:""});
+    }catch(e){
+      setError("Fehler beim Speichern: "+e.message);
+    }
+    setSending(false);
   };
 
   if(sent)return React.createElement("div",{style:{textAlign:"center",padding:"60px 20px"}},
     React.createElement("div",{style:{fontSize:40,marginBottom:12}},"💬"),
     React.createElement("p",{style:{fontWeight:700,fontSize:16,margin:"0 0 8px"}},"Danke für dein Feedback!"),
-    React.createElement("p",{style:{color:"#7A736A",fontSize:13}},"Dein E-Mail-Programm sollte sich geöffnet haben. Bitte die E-Mail noch absenden."),
+    React.createElement("p",{style:{color:"#7A736A",fontSize:13}},"Es wurde gespeichert und wird bei der nächsten Gelegenheit berücksichtigt."),
     React.createElement("button",{onClick:()=>setSent(false),style:{marginTop:16,background:"#3a7d44",color:"#fff",border:"none",borderRadius:6,padding:"8px 18px",fontSize:13,fontWeight:600,cursor:"pointer"}},"Weiteres Feedback")
   );
 
   return React.createElement("div",{style:{background:"#FDFBF8",border:"1px solid #D8D2C8",borderRadius:12,padding:24,maxWidth:600}},
     React.createElement("h2",{style:{margin:"0 0 6px",fontSize:18,fontWeight:700}},"💬 Feedback"),
     React.createElement("p",{style:{color:"#7A736A",fontSize:13,marginBottom:16}},"Ideen, Anregungen oder Fehler melden – wir freuen uns über jedes Feedback!"),
+    error&&React.createElement("div",{style:{background:"#fde8e8",border:"1px solid #f5c6c6",borderRadius:6,padding:"8px 12px",marginBottom:12,fontSize:12}},error),
     React.createElement("label",{style:lbl},"Kategorie"),
     React.createElement("select",{style:inp,value:form.kategorie,onChange:e=>set("kategorie",e.target.value)},
       React.createElement("option",null,"Verbesserungsvorschlag"),
@@ -450,7 +459,7 @@ function FeedbackView(){
     React.createElement("textarea",{style:{...inp,height:120,resize:"vertical"},value:form.text,onChange:e=>set("text",e.target.value),placeholder:"Deine Ideen, Anregungen oder Fehlerhinweise…"}),
     React.createElement("label",{style:lbl},"Name (freiwillig)"),
     React.createElement("input",{style:inp,value:form.name,onChange:e=>set("name",e.target.value),placeholder:"Dein Name"}),
-    React.createElement("button",{onClick:handleSend,style:{marginTop:16,background:"#3a7d44",color:"#fff",border:"none",borderRadius:6,padding:"9px 22px",fontSize:13,fontWeight:600,cursor:"pointer"}},"📨 Feedback senden")
+    React.createElement("button",{onClick:handleSend,disabled:sending,style:{marginTop:16,background:"#3a7d44",color:"#fff",border:"none",borderRadius:6,padding:"9px 22px",fontSize:13,fontWeight:600,cursor:"pointer"}},sending?"Wird gespeichert…":"💬 Feedback senden")
   );
 }
 
