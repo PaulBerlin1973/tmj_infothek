@@ -131,26 +131,30 @@ function FlyerZone({title,onFile,onClose}){
 }
 
 // ── Event Banner ──────────────────────────────────────
-function EventBanner({events,meinBezirk,onSwitch}){
+function EventBanner({events,fortbildungen,meinBezirk,onSwitch,onSwitchFb}){
   const today=new Date();today.setHours(0,0,0,0);
-  const up=events.filter(e=>{
+  const upEv=events.filter(e=>{
     if(e.datum&&new Date(e.datum+"T12:00:00")<today)return false;
     if(meinBezirk!=="Alle Bezirke"&&e.bezirk&&e.bezirk!=="Alle Bezirke"&&e.bezirk!==meinBezirk)return false;
     return true;
-  }).sort((a,b)=>(a.datum||"9")<(b.datum||"9")?-1:1).slice(0,3);
-  if(!up.length)return null;
+  }).sort((a,b)=>(a.datum||"9")<(b.datum||"9")?-1:1).slice(0,2);
+  const upFb=(fortbildungen||[]).filter(e=>!e.datum||new Date(e.datum+"T12:00:00")>=today).sort((a,b)=>(a.datum||"9")<(b.datum||"9")?-1:1).slice(0,2);
+  if(!upEv.length&&!upFb.length)return null;
   const df=d=>{try{return new Date(d+"T12:00:00").toLocaleDateString("de-DE",{day:"numeric",month:"long"});}catch{return d;}};
   const db=d=>{if(!d)return null;const n=Math.ceil((new Date(d+"T12:00:00")-today)/86400000);return n===0?"Heute":n===1?"Morgen":n<=7?"In "+n+" Tagen":null;};
-  return React.createElement("div",{onClick:onSwitch,style:{background:"#ff613d",padding:"8px 16px",display:"flex",alignItems:"center",gap:10,flexWrap:"wrap",cursor:"pointer"}},
-    React.createElement("span",{style:{color:"#fff",fontSize:11,fontWeight:700,textTransform:"uppercase",opacity:0.9,whiteSpace:"nowrap"}},"📅 Aktuell"),
+  const Item=({item,onClick,icon})=>React.createElement("div",{onClick:e=>{e.stopPropagation();onClick();},style:{background:"rgba(255,255,255,0.2)",borderRadius:6,padding:"4px 10px",display:"flex",alignItems:"center",gap:6,cursor:"pointer"}},
+    icon&&React.createElement("span",{style:{fontSize:10,opacity:0.8}},icon),
+    (()=>{const b=db(item.datum);return b?React.createElement("span",{style:{background:b==="Heute"?"#C0392B":b==="Morgen"?"#E67E22":"rgba(255,255,255,0.3)",color:"#fff",fontSize:10,fontWeight:700,padding:"1px 5px",borderRadius:3}},b):null;})(),
+    React.createElement("span",{style:{color:"#fff",fontSize:12,fontWeight:600}},item.titel),
+    item.datum&&React.createElement("span",{style:{color:"rgba(255,255,255,0.7)",fontSize:11}},df(item.datum))
+  );
+  return React.createElement("div",{style:{background:"#ff613d",padding:"8px 16px",display:"flex",alignItems:"center",gap:10,flexWrap:"wrap"}},
+    React.createElement("span",{style:{color:"#fff",fontSize:11,fontWeight:700,textTransform:"uppercase",opacity:0.9,whiteSpace:"nowrap"}},"🔔 Aktuell"),
     React.createElement("div",{style:{display:"flex",gap:8,flexWrap:"wrap",flex:1}},
-      up.map(ev=>{const b=db(ev.datum);return React.createElement("div",{key:ev.id,style:{background:"rgba(255,255,255,0.2)",borderRadius:6,padding:"4px 10px",display:"flex",alignItems:"center",gap:6}},
-        b&&React.createElement("span",{style:{background:b==="Heute"?"#C0392B":b==="Morgen"?"#E67E22":"rgba(255,255,255,0.3)",color:"#fff",fontSize:10,fontWeight:700,padding:"1px 5px",borderRadius:3}},b),
-        React.createElement("span",{style:{color:"#fff",fontSize:12,fontWeight:600}},ev.titel),
-        ev.datum&&React.createElement("span",{style:{color:"rgba(255,255,255,0.7)",fontSize:11}},df(ev.datum))
-      );})
+      upEv.map(ev=>React.createElement(Item,{key:"ev"+ev.id,item:ev,onClick:onSwitch,icon:"📅"})),
+      upFb.map(fb=>React.createElement(Item,{key:"fb"+fb.id,item:fb,onClick:onSwitchFb,icon:"🎓"}))
     ),
-    React.createElement("span",{style:{color:"rgba(255,255,255,0.7)",fontSize:11}},"Alle →")
+    React.createElement("span",{style:{color:"rgba(255,255,255,0.7)",fontSize:11}},"→")
   );
 }
 
@@ -531,11 +535,11 @@ function App(){
       view==="list"&&React.createElement("div",{style:{marginTop:10,display:"flex",gap:2,flexWrap:"wrap"}},
         React.createElement("button",{onClick:()=>setTab("orgs"),style:{background:tab==="orgs"?"rgba(255,255,255,0.2)":"transparent",color:"#fff",border:"none",borderRadius:"5px 5px 0 0",padding:"6px 14px",fontSize:11,fontWeight:tab==="orgs"?700:400,cursor:"pointer"}},"🏢 Organisationen ("+orgs.length+")"),
         React.createElement("button",{onClick:()=>setTab("events"),style:{background:tab==="events"?"rgba(255,255,255,0.2)":"transparent",color:"#fff",border:"none",borderRadius:"5px 5px 0 0",padding:"6px 14px",fontSize:11,fontWeight:tab==="events"?700:400,cursor:"pointer"}},"📅 Veranstaltungen ("+events.length+")"),
-        React.createElement("button",{onClick:()=>setTab("fortbildungen"),style:{background:tab==="fortbildungen"?"rgba(255,255,255,0.2)":"transparent",color:"#fff",border:"none",borderRadius:"5px 5px 0 0",padding:"6px 14px",fontSize:11,fontWeight:tab==="fortbildungen"?700:400,cursor:"pointer"}},"🎓 Fortbildungen ("+fortbildungen.length+")"),
+        React.createElement("button",{onClick:()=>setTab("fortbildungen"),style:{background:tab==="fortbildungen"?"rgba(255,255,255,0.2)":"transparent",color:"#fff",border:"none",borderRadius:"5px 5px 0 0",padding:"6px 14px",fontSize:11,fontWeight:tab==="fortbildungen"?700:400,cursor:"pointer"}},"🎓 Fortbildungen/Fachtagungen ("+fortbildungen.length+")"),
         React.createElement("button",{onClick:()=>setTab("feedback"),style:{background:tab==="feedback"?"rgba(255,255,255,0.2)":"transparent",color:"#fff",border:"none",borderRadius:"5px 5px 0 0",padding:"6px 14px",fontSize:11,fontWeight:tab==="feedback"?700:400,cursor:"pointer"}},"💬 Feedback")
       )
     ),
-    React.createElement(EventBanner,{events,meinBezirk:mBez,onSwitch:()=>setTab("events")}),
+    React.createElement(EventBanner,{events,fortbildungen,meinBezirk:mBez,onSwitch:()=>setTab("events"),onSwitchFb:()=>setTab("fortbildungen")}),
     React.createElement("main",{style:{padding:"14px",maxWidth:900,margin:"0 auto"}},
       error&&React.createElement("div",{style:{background:"#fde8e8",border:"1px solid #f5c6c6",borderRadius:8,padding:"10px 14px",marginBottom:12,fontSize:12,display:"flex",justifyContent:"space-between"}},error,React.createElement("button",{onClick:()=>setError(""),style:{background:"none",border:"none",cursor:"pointer",fontSize:14,color:"#888"}},"✕")),
       view==="list"&&tab==="orgs"&&React.createElement(React.Fragment,null,
