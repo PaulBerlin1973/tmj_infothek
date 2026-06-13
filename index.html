@@ -271,7 +271,29 @@ function DetailView({org,onEdit,onDelete}){
   return React.createElement("div",{style:{background:"#FDFBF8",border:"1px solid #D8D2C8",borderRadius:12,padding:20,maxWidth:600}},
     React.createElement("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}},
       React.createElement("span",{style:{fontSize:10,fontWeight:700,textTransform:"uppercase",color:G,background:"#eaf4ec",padding:"3px 10px",borderRadius:4}},org.bezirk),
-      React.createElement("div",{style:{display:"flex",gap:8}},
+      React.createElement("div",{style:{display:"flex",gap:8,flexWrap:"wrap"}},
+        React.createElement("button",{onClick:()=>{
+          const text=`${org.name}\n${org.adresse||""}${org.telefon?"\n📞 "+org.telefon:""}${org.email?"\n✉️ "+org.email:""}${org.website?"\n🌐 "+org.website:""}${org.notiz?"\n\n"+org.notiz:""}`;
+          if(navigator.share){navigator.share({title:org.name,text});}
+          else{navigator.clipboard.writeText(text).then(()=>alert("Adresse kopiert! ✓"));}
+        },style:{background:"#2980B9",color:"#fff",border:"none",borderRadius:6,padding:"5px 12px",fontSize:12,fontWeight:600,cursor:"pointer"}},"📤 Teilen"),
+        React.createElement("button",{onClick:()=>{
+          const w=window.open("","_blank");
+          w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${org.name}</title><style>body{font-family:system-ui,sans-serif;max-width:500px;margin:40px auto;padding:20px;color:#1A1714;}h1{font-size:20px;margin:0 0 6px;color:#3a7d44;}.bezirk{font-size:11px;font-weight:700;text-transform:uppercase;color:#3a7d44;background:#eaf4ec;padding:3px 8px;border-radius:4px;display:inline-block;margin-bottom:12px;}.row{margin-bottom:8px;font-size:13px;}.label{font-size:10px;font-weight:700;text-transform:uppercase;color:#7A736A;margin-bottom:2px;}.tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px;}.tag{background:#555;color:#fff;font-size:10px;padding:2px 6px;border-radius:4px;}.notiz{background:#F7F4EF;border-radius:8px;padding:10px;margin-top:12px;font-size:12px;}.logo{color:#3a7d44;font-weight:700;font-size:14px;margin-bottom:16px;}@media print{button{display:none;}}</style></head><body>
+          <div class="logo">Tamaja Infothek</div>
+          <span class="bezirk">${org.bezirk}${org.ortsteil?" · "+org.ortsteil:""}</span>
+          <h1>${org.name}</h1>
+          ${org.adresse?`<div class="row"><div class="label">Adresse</div>${org.adresse}</div>`:""}
+          ${org.telefon?`<div class="row"><div class="label">Telefon</div>📞 ${org.telefon}</div>`:""}
+          ${org.email?`<div class="row"><div class="label">E-Mail</div>✉️ ${org.email}</div>`:""}
+          ${org.website?`<div class="row"><div class="label">Website</div>🌐 ${org.website}</div>`:""}
+          ${(org.sprachen||[]).length>0?`<div class="row"><div class="label">Sprachen</div><div class="tags">${org.sprachen.map(s=>`<span class="tag">${s}</span>`).join("")}</div></div>`:""}
+          ${(org.leistungen||[]).length>0?`<div class="row"><div class="label">Leistungen</div><div class="tags">${org.leistungen.map(l=>`<span class="tag">${l}</span>`).join("")}</div></div>`:""}
+          ${org.notiz?`<div class="notiz"><div class="label">Hinweise</div>${org.notiz}</div>`:""}
+          <script>window.onload=()=>window.print();<\/script>
+          </body></html>`);
+          w.document.close();
+        },style:{background:"#555",color:"#fff",border:"none",borderRadius:6,padding:"5px 12px",fontSize:12,fontWeight:600,cursor:"pointer"}},"🖨️ Drucken"),
         React.createElement("button",{onClick:onEdit,style:{background:G,color:"#fff",border:"none",borderRadius:6,padding:"5px 12px",fontSize:12,fontWeight:600,cursor:"pointer"}},"Bearbeiten"),
         React.createElement("button",{onClick:onDelete,style:{background:"none",color:"#C0392B",border:"1px solid #C0392B",borderRadius:6,padding:"5px 12px",fontSize:12,fontWeight:600,cursor:"pointer"}},"Löschen")
       )
