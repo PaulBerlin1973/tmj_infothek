@@ -52,10 +52,11 @@ const LEISTUNGEN_GRUPPEN=[
   {label:"Zielgruppen",items:["Frauen & Mädchen","LSBTI+ Geflüchtete","Ältere Menschen","Menschen mit Behinderung"]},
   {label:"Begegnung & Integration",items:["Nachbarschaftshilfe","Kulturelle Angebote","Sport & Bewegung","Ehrenamt & Patenschaften","Ehrenamt / Ehrenamtliches Engagement"]},
   {label:"Sonstiges",items:["Übersetzung & Dolmetschen","Notfallhilfe"]},
+  {label:"Fort- & Weiterbildung",items:["Fortbildungen","Fachtagungen"]},
 ];
 const LEISTUNGEN=LEISTUNGEN_GRUPPEN.flatMap(g=>g.items);
 const SPRACHEN=["Arabisch","Türkisch","Deutsch","Dari","Farsi","Vietnamesisch","Englisch","Französisch","Russisch","Ukrainisch"];
-const LC={"Asylberatung":"#1C4B6E","Rechtsberatung":"#2E6B8A","Behördenbegleitung":"#3A7A9A","Abschiebeschutz":"#1A3A5C","Sozialberatung":"#5A8A5A","Unterkunft":"#7A4A7A","Wohnungssuche":"#6A5A8A","Kleiderkammer / Sachspenden":"#8A7A4A","Medizinische Versorgung":"#4A8A7A","Psychosoziale Betreuung":"#8A4A4A","Traumaberatung":"#9A3A3A","Suchtberatung":"#7A4A5A","Sprachkurse":"#8A6A2E","Integrationskurse":"#9A7A3A","Schulbegleitung":"#7A8A3A","Hausaufgabenhilfe":"#6A7A4A","Arbeitsmarktberatung":"#4A6A8A","Ausbildungsbegleitung":"#3A5A7A","Berufsanerkennung":"#5A6A8A","Kinderbetreuung":"#6A8A4A","Jugendarbeit":"#5A9A5A","Jugendhilfe":"#4A8A5A","Careleaverberatung":"#3A7A6A","Jugendfreizeit":"#4A9A6A","Freizeitangebote für Kinder":"#4A8A6A","Mutter-Kind-Angebote":"#8A6A5A","Erziehungsberatung":"#7A6A3A","Unbegleitete Minderjährige":"#5A5A8A","Frauen & Mädchen":"#8A5A7A","LSBTI+ Geflüchtete":"#7A5A8A","Ältere Menschen":"#7A6A5A","Menschen mit Behinderung":"#6A6A7A","Nachbarschaftshilfe":"#5A8A6A","Kulturelle Angebote":"#8A6A3A","Sport & Bewegung":"#4A7A4A","Ehrenamt & Patenschaften":"#6A8A5A","Ehrenamt / Ehrenamtliches Engagement":"#5A7A4A","Übersetzung & Dolmetschen":"#6A5A8A","Notfallhilfe":"#C0392B"};
+const LC={"Asylberatung":"#1C4B6E","Rechtsberatung":"#2E6B8A","Behördenbegleitung":"#3A7A9A","Abschiebeschutz":"#1A3A5C","Sozialberatung":"#5A8A5A","Unterkunft":"#7A4A7A","Wohnungssuche":"#6A5A8A","Kleiderkammer / Sachspenden":"#8A7A4A","Medizinische Versorgung":"#4A8A7A","Psychosoziale Betreuung":"#8A4A4A","Traumaberatung":"#9A3A3A","Suchtberatung":"#7A4A5A","Sprachkurse":"#8A6A2E","Integrationskurse":"#9A7A3A","Schulbegleitung":"#7A8A3A","Hausaufgabenhilfe":"#6A7A4A","Arbeitsmarktberatung":"#4A6A8A","Ausbildungsbegleitung":"#3A5A7A","Berufsanerkennung":"#5A6A8A","Kinderbetreuung":"#6A8A4A","Jugendarbeit":"#5A9A5A","Jugendhilfe":"#4A8A5A","Careleaverberatung":"#3A7A6A","Jugendfreizeit":"#4A9A6A","Freizeitangebote für Kinder":"#4A8A6A","Mutter-Kind-Angebote":"#8A6A5A","Erziehungsberatung":"#7A6A3A","Unbegleitete Minderjährige":"#5A5A8A","Frauen & Mädchen":"#8A5A7A","LSBTI+ Geflüchtete":"#7A5A8A","Ältere Menschen":"#7A6A5A","Menschen mit Behinderung":"#6A6A7A","Nachbarschaftshilfe":"#5A8A6A","Kulturelle Angebote":"#8A6A3A","Sport & Bewegung":"#4A7A4A","Ehrenamt & Patenschaften":"#6A8A5A","Ehrenamt / Ehrenamtliches Engagement":"#5A7A4A","Übersetzung & Dolmetschen":"#6A5A8A","Notfallhilfe":"#C0392B","Fortbildungen":"#2C7BB6","Fachtagungen":"#1A5276"};
 const SC={"Arabisch":"#C0392B","Türkisch":"#E67E22","Deutsch":"#2980B9","Dari":"#8E44AD","Farsi":"#6C3483","Vietnamesisch":"#16A085","Englisch":"#27AE60","Französisch":"#2471A3","Russisch":"#1A5276","Ukrainisch":"#D4AC0D"};
 
 const tomorrow=new Date(Date.now()+2*86400000).toISOString().split("T")[0];
@@ -73,6 +74,7 @@ const SAMPLE_ORGS=[
   {id:5,name:"Medibüro Berlin",bezirk:"Mitte",ortsteil:"",reichweite:["Online"],adresse:"Rungestraße 18, 10179 Berlin",telefon:"030 22473795",email:"info@medibuero.de",website:"www.medibuero.de",leistungen:["Medizinische Versorgung"],sprachen:["Deutsch","Englisch","Arabisch","Dari","Farsi"],notiz:"Medizinische Versorgung ohne Krankenversicherung"},
 ];
 const emptyOrg={name:"",bezirk:"Mitte",ortsteil:"",reichweite:[],adresse:"",telefon:"",email:"",website:"",leistungen:[],sprachen:[],notiz:""};
+const emptyFb={titel:"",art:"Fortbildung",format:"Präsenz",beschreibung:"",datum:"",uhrzeit:"",ort:"",veranstalter:"",zielgruppe:"",kosten:"",anmeldung:""};
 const emptyEv={titel:"",beschreibung:"",datum:"",uhrzeit:"",ort:"",bezirk:"Alle Bezirke",veranstalter:"",zielgruppe:"",kosten:"",kontakt:""};
 
 // ── Datenbank ─────────────────────────────────────────
@@ -92,6 +94,19 @@ const DB={
   async deleteOrg(id){
     if(sb){await sb.from("organisationen").delete().eq("id",id);return;}
     try{const all=JSON.parse(localStorage.getItem("t-orgs")||"[]");localStorage.setItem("t-orgs",JSON.stringify(all.filter(o=>o.id!==id)));}catch{}
+  },
+  async loadFortbildungen(){
+    const today=new Date().toISOString().split("T")[0];
+    if(sb){const{data}=await sb.from("fortbildungen").select("*").gte("datum",today).order("datum");return data||[];}
+    try{const r=localStorage.getItem("t-fb");return r?JSON.parse(r).filter(e=>!e.datum||e.datum>=today):[];}catch{return[];}
+  },
+  async insertFortbildung(fb){
+    if(sb){const{data}=await sb.from("fortbildungen").insert({...fb,id:undefined}).select().single();return data||fb;}
+    try{const all=JSON.parse(localStorage.getItem("t-fb")||"[]");const n={...fb,id:Date.now()};all.push(n);localStorage.setItem("t-fb",JSON.stringify(all));return n;}catch{return fb;}
+  },
+  async deleteFortbildung(id){
+    if(sb){await sb.from("fortbildungen").delete().eq("id",id);return;}
+    try{const all=JSON.parse(localStorage.getItem("t-fb")||"[]");localStorage.setItem("t-fb",JSON.stringify(all.filter(e=>e.id!==id)));}catch{}
   },
   async loadEvents(){
     const today=new Date().toISOString().split("T")[0];
@@ -409,6 +424,90 @@ function EventsView({events,meinBezirk,onDelete}){
   }));
 }
 
+function FortbildungForm({initial,onSave,onCancel,saving}){
+  const [form,setForm]=React.useState({...emptyFb,...(initial||{})});
+  const set=(f,v)=>setForm(x=>({...x,[f]:v}));
+  const inp={width:"100%",padding:"7px 9px",border:"1px solid #D8D2C8",borderRadius:5,background:"#bdacfb",fontSize:12,outline:"none",boxSizing:"border-box"};
+  const lbl={display:"block",fontSize:10,fontWeight:700,color:"#7A736A",textTransform:"uppercase",marginBottom:3,marginTop:10};
+  return React.createElement("div",{style:{background:"#FFFFFF",border:"1px solid #D8D2C8",borderRadius:12,padding:18,maxWidth:600}},
+    React.createElement("h2",{style:{margin:"0 0 14px",fontSize:16,fontWeight:700}},"Neue Fortbildung / Fachtagung"),
+    React.createElement("label",{style:lbl},"Titel *"),React.createElement("input",{style:inp,value:form.titel,onChange:e=>set("titel",e.target.value),placeholder:"Titel der Veranstaltung"}),
+    React.createElement("div",{style:{display:"flex",gap:8}},
+      React.createElement("div",{style:{flex:1}},
+        React.createElement("label",{style:lbl},"Art"),
+        React.createElement("select",{style:inp,value:form.art,onChange:e=>set("art",e.target.value)},
+          React.createElement("option",null,"Fortbildung"),
+          React.createElement("option",null,"Fachtagung"),
+          React.createElement("option",null,"Workshop"),
+          React.createElement("option",null,"Seminar"),
+          React.createElement("option",null,"Konferenz")
+        )
+      ),
+      React.createElement("div",{style:{flex:1}},
+        React.createElement("label",{style:lbl},"Format"),
+        React.createElement("select",{style:inp,value:form.format||"Präsenz",onChange:e=>set("format",e.target.value)},
+          React.createElement("option",null,"Präsenz"),
+          React.createElement("option",null,"Online"),
+          React.createElement("option",null,"Hybrid")
+        )
+      )
+    ),
+    React.createElement("div",{style:{display:"flex",gap:8}},
+      React.createElement("div",{style:{flex:2}},React.createElement("label",{style:lbl},"Datum"),React.createElement("input",{type:"date",style:inp,value:form.datum,onChange:e=>set("datum",e.target.value)})),
+      React.createElement("div",{style:{flex:2}},React.createElement("label",{style:lbl},"Uhrzeit"),React.createElement("input",{style:inp,value:form.uhrzeit,onChange:e=>set("uhrzeit",e.target.value),placeholder:"09:00 – 17:00 Uhr"}))
+    ),
+    React.createElement("label",{style:lbl},"Ort"),React.createElement("input",{style:inp,value:form.ort,onChange:e=>set("ort",e.target.value),placeholder:"Adresse oder Online"}),
+    React.createElement("div",{style:{display:"flex",gap:8}},
+      React.createElement("div",{style:{flex:1}},React.createElement("label",{style:lbl},"Veranstalter"),React.createElement("input",{style:inp,value:form.veranstalter,onChange:e=>set("veranstalter",e.target.value),placeholder:"Organisation"})),
+      React.createElement("div",{style:{flex:1}},React.createElement("label",{style:lbl},"Zielgruppe"),React.createElement("input",{style:inp,value:form.zielgruppe,onChange:e=>set("zielgruppe",e.target.value),placeholder:"z.B. Sozialarbeiter"}))
+    ),
+    React.createElement("div",{style:{display:"flex",gap:8}},
+      React.createElement("div",{style:{flex:1}},React.createElement("label",{style:lbl},"Kosten"),React.createElement("input",{style:inp,value:form.kosten,onChange:e=>set("kosten",e.target.value),placeholder:"kostenlos / 50 €"})),
+      React.createElement("div",{style:{flex:1}},React.createElement("label",{style:lbl},"Anmeldung"),React.createElement("input",{style:inp,value:form.anmeldung,onChange:e=>set("anmeldung",e.target.value),placeholder:"Link oder E-Mail"}))
+    ),
+    React.createElement("label",{style:lbl},"Beschreibung"),React.createElement("textarea",{style:{...inp,height:70,resize:"vertical"},value:form.beschreibung,onChange:e=>set("beschreibung",e.target.value),placeholder:"Kurze Beschreibung…"}),
+    React.createElement("div",{style:{display:"flex",justifyContent:"flex-end",gap:8,marginTop:14}},
+      React.createElement("button",{onClick:onCancel,style:{background:"none",border:"1px solid #D8D2C8",borderRadius:6,padding:"7px 14px",fontSize:12,cursor:"pointer"}},"Abbrechen"),
+      React.createElement("button",{onClick:()=>{if(!form.titel.trim())return alert("Bitte Titel eingeben.");onSave(form);},disabled:saving,style:{background:G,color:"#fff",border:"none",borderRadius:6,padding:"7px 18px",fontSize:12,fontWeight:600,cursor:"pointer"}},saving?"Speichern…":"Speichern")
+    )
+  );
+}
+
+function FortbildungenView({fortbildungen,onDelete}){
+  const today=new Date();today.setHours(0,0,0,0);
+  const vis=fortbildungen.filter(e=>!e.datum||new Date(e.datum+"T12:00:00")>=today).sort((a,b)=>(a.datum||"9")<(b.datum||"9")?-1:1);
+  const fmt=d=>{try{return new Date(d+"T12:00:00").toLocaleDateString("de-DE",{weekday:"long",day:"numeric",month:"long"});}catch{return d;}};
+  const badge=d=>{if(!d)return null;const n=Math.ceil((new Date(d+"T12:00:00")-today)/86400000);if(n===0)return{l:"Heute!",c:"#C0392B"};if(n===1)return{l:"Morgen",c:"#E67E22"};if(n<=7)return{l:"In "+n+" Tagen",c:G};return null;};
+  if(!vis.length)return React.createElement("div",{style:{textAlign:"center",padding:"50px 20px"}},
+    React.createElement("div",{style:{fontSize:32,marginBottom:10}},"🎓"),
+    React.createElement("p",{style:{fontWeight:600,fontSize:14}},"Keine Fortbildungen."),
+    React.createElement("p",{style:{color:"#7A736A",fontSize:12,marginTop:4}},"Fortbildung manuell hinzufügen oder Flyer einlesen.")
+  );
+  return React.createElement("div",{style:{display:"flex",flexDirection:"column",gap:10}},vis.map(fb=>{
+    const b=badge(fb.datum);
+    return React.createElement("div",{key:fb.id,style:{background:"#FFFFFF",border:"1px solid #D8D2C8",borderRadius:10,padding:14,display:"flex",gap:10}},
+      React.createElement("div",{style:{flex:1}},
+        React.createElement("div",{style:{display:"flex",alignItems:"center",gap:5,marginBottom:5,flexWrap:"wrap"}},
+          React.createElement("span",{style:{fontSize:10,fontWeight:700,textTransform:"uppercase",color:"#2C7BB6",background:"#EBF5FB",padding:"2px 7px",borderRadius:4}},fb.art||"Fortbildung"),
+          fb.format&&React.createElement("span",{style:{fontSize:10,fontWeight:700,textTransform:"uppercase",color:fb.format==="Online"?"#27AE60":fb.format==="Hybrid"?"#E67E22":"#8E44AD",background:"#F4F4F4",padding:"2px 7px",borderRadius:4}},fb.format),
+          b&&React.createElement("span",{style:{fontSize:10,fontWeight:700,background:b.c,color:"#fff",padding:"2px 6px",borderRadius:4}},b.l)
+        ),
+        React.createElement("h3",{style:{margin:"0 0 4px",fontSize:14,fontWeight:700,lineHeight:1.3}},fb.titel),
+        fb.beschreibung&&React.createElement("p",{style:{margin:"0 0 6px",fontSize:11,color:"#444",lineHeight:1.4}},fb.beschreibung),
+        React.createElement("div",{style:{display:"flex",flexWrap:"wrap",gap:10,fontSize:11,color:"#7A736A"}},
+          fb.datum&&React.createElement("span",null,"📅 "+fmt(fb.datum)+(fb.uhrzeit?", "+fb.uhrzeit:"")),
+          fb.ort&&React.createElement("span",null,"📍 "+fb.ort),
+          fb.veranstalter&&React.createElement("span",null,"🏢 "+fb.veranstalter),
+          fb.zielgruppe&&React.createElement("span",null,"👥 "+fb.zielgruppe),
+          fb.kosten&&React.createElement("span",null,"💶 "+fb.kosten),
+          fb.anmeldung&&React.createElement("span",null,"📝 Anmeldung: "+fb.anmeldung)
+        )
+      ),
+      React.createElement("button",{onClick:()=>onDelete(fb.id),style:{background:"none",border:"none",cursor:"pointer",fontSize:15,opacity:0.35,alignSelf:"flex-start"}},"🗑️")
+    );
+  }));
+}
+
 function FeedbackView(){
   const [form,setForm]=React.useState({name:"",email:"",kategorie:"Verbesserungsvorschlag",text:""});
   const [sent,setSent]=React.useState(false);
@@ -531,6 +630,9 @@ function App(){
   const handleDelOrg=async id=>{await DB.deleteOrg(id);setOrgs(p=>p.filter(o=>o.id!==id));setDel(null);if(view==="detail")setView("list");};
   const handleSaveEv=async ev=>{setSaving(true);const s=await DB.insertEvent({...ev,sprachen:[]});setEvents(p=>[...p,s]);setSaving(false);setEvView("list");setEditEv(null);};
   const handleDelEv=async id=>{await DB.deleteEvent(id);setEvents(p=>p.filter(e=>e.id!==id));};
+  const handleSaveFb=async fb=>{setSaving(true);const s=await DB.insertFortbildung({...fb});setFortbildungen(p=>[...p,s]);setSaving(false);setFbView("list");setEditFb(null);};
+  const handleDelFb=async id=>{await DB.deleteFortbildung(id);setFortbildungen(p=>p.filter(e=>e.id!==id));};
+  const processFbFlyer=async file=>{setModal("");if(!ANTHROPIC_KEY){setError("Kein Anthropic API-Key.");return;}setSpinning("KI liest Fortbildungsflyer aus…");try{const b64=await toB64(file);const ex=await claudeJSON(`Extrahiere Infos aus einem Fortbildungs- oder Fachtagungsflyer. Antworte NUR JSON. JSON: {"titel":"","art":"Fortbildung oder Fachtagung","beschreibung":"","datum":"YYYY-MM-DD","uhrzeit":"","ort":"","veranstalter":"","zielgruppe":"","kosten":"","anmeldung":""}`,`Extrahiere alle Infos.`,{type:file.type||"image/jpeg",data:b64});const fb=await DB.insertFortbildung({...ex});setFortbildungen(p=>[...p,fb]);}catch(e){setError("Flyer konnte nicht ausgelesen werden.");}setSpinning("");};
 
   const processOrgFlyer=async file=>{setModal("");setSpinning("KI liest Flyer aus…");try{const b64=await toB64(file);const ex=await claudeJSON(ORG_SYS,"Extrahiere alle Infos aus diesem Flyer.",{type:file.type||"image/jpeg",data:b64});setEditOrg({...emptyOrg,...ex,leistungen:Array.isArray(ex.leistungen)?ex.leistungen:[],sprachen:Array.isArray(ex.sprachen)?ex.sprachen:[],reichweite:Array.isArray(ex.reichweite)?ex.reichweite:[],bezirk:BEZIRKE.slice(1).includes(ex.bezirk)?ex.bezirk:"Mitte"});setView("form");}catch(e){setError("Flyer konnte nicht ausgelesen werden.");}setSpinning("");};
   const processEvFlyer=async file=>{setModal("");setSpinning("KI liest Veranstaltungsflyer aus…");try{const b64=await toB64(file);const ex=await claudeJSON(EV_SYS,"Extrahiere alle Infos.",{type:file.type||"image/jpeg",data:b64});const ev=await DB.insertEvent({...ex,bezirk:BEZIRKE.slice(1).includes(ex.bezirk)?ex.bezirk:"Alle Bezirke",sprachen:Array.isArray(ex.sprachen)?ex.sprachen:[]});setEvents(p=>[...p,ev]);}catch(e){setError("Veranstaltungsflyer konnte nicht ausgelesen werden.");}setSpinning("");};
@@ -568,6 +670,11 @@ function App(){
             React.createElement("button",{style:hb,onClick:()=>setModal("orgFlyer")},"📄 Flyer auslesen"),
             React.createElement("button",{style:{...hb,background:"#fff",color:G,border:"none"},onClick:()=>{setEditOrg({...emptyOrg});setView("form");}},"✏️ Manuell eintragen")
           ),
+          view==="list"&&tab==="fortbildungen"&&React.createElement(React.Fragment,null,
+            React.createElement("span",{style:{color:"rgba(255,255,255,0.8)",fontSize:11,fontWeight:600,marginRight:4}},"Fortbildung hinzufügen:"),
+            React.createElement("button",{style:hb,onClick:()=>setModal("fbFlyer")},"📄 Flyer auslesen"),
+            React.createElement("button",{style:{...hb,background:"#fff",color:G,border:"none"},onClick:()=>{setEditFb({...emptyFb});setFbView("form");}},"✏️ Manuell eintragen")
+          ),
           view==="list"&&tab==="events"&&React.createElement(React.Fragment,null,
             React.createElement("select",{value:mBez,onChange:e=>setMBez(e.target.value),style:hb},BEZIRKE.map(b=>React.createElement("option",{key:b},b))),
             React.createElement("span",{style:{color:"rgba(255,255,255,0.8)",fontSize:11,fontWeight:600,marginRight:4}},"Veranstaltung hinzufügen:"),
@@ -580,6 +687,7 @@ function App(){
       view==="list"&&React.createElement("div",{style:{marginTop:10,display:"flex",gap:2}},
         React.createElement("button",{onClick:()=>setTab("orgs"),style:{background:tab==="orgs"?"rgba(255,255,255,0.2)":"transparent",color:"#fff",border:"none",borderRadius:"5px 5px 0 0",padding:"6px 14px",fontSize:11,fontWeight:tab==="orgs"?700:400,cursor:"pointer"}},"🏢 Organisationen ("+orgs.length+")"),
         React.createElement("button",{onClick:()=>setTab("events"),style:{background:tab==="events"?"rgba(255,255,255,0.2)":"transparent",color:"#fff",border:"none",borderRadius:"5px 5px 0 0",padding:"6px 14px",fontSize:11,fontWeight:tab==="events"?700:400,cursor:"pointer"}},"📅 Veranstaltungen ("+events.length+")"),
+        React.createElement("button",{onClick:()=>setTab("fortbildungen"),style:{background:tab==="fortbildungen"?"rgba(255,255,255,0.2)":"transparent",color:"#fff",border:"none",borderRadius:"5px 5px 0 0",padding:"6px 14px",fontSize:11,fontWeight:tab==="fortbildungen"?700:400,cursor:"pointer"}},"🎓 Fortbildungen ("+fortbildungen.length+")"),
         React.createElement("button",{onClick:()=>setTab("feedback"),style:{background:tab==="feedback"?"rgba(255,255,255,0.2)":"transparent",color:"#fff",border:"none",borderRadius:"5px 5px 0 0",padding:"6px 14px",fontSize:11,fontWeight:tab==="feedback"?700:400,cursor:"pointer"}},"💬 Feedback")
       )
     ),
@@ -605,6 +713,8 @@ function App(){
           ?React.createElement("div",{style:{textAlign:"center",padding:"50px 20px"}},React.createElement("div",{style:{fontSize:30,marginBottom:8}},"🔍"),React.createElement("p",{style:{fontWeight:600}},"Keine Organisationen gefunden."))
           :React.createElement("div",{style:{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(230px,1fr))",gap:10}},filtered.map(o=>React.createElement(OrgCard,{key:o.id,org:o,onView:()=>{setDetailOrg(o);setView("detail");},onEdit:()=>{setEditOrg(o);setView("form");},onDelete:()=>setDel(o.id)})))
       ),
+      view==="list"&&tab==="fortbildungen"&&fbView==="list"&&React.createElement(FortbildungenView,{fortbildungen,onDelete:handleDelFb}),
+      view==="list"&&tab==="fortbildungen"&&fbView==="form"&&React.createElement(FortbildungForm,{initial:editFb,onSave:handleSaveFb,onCancel:()=>{setFbView("list");setEditFb(null);},saving}),
       view==="list"&&tab==="feedback"&&React.createElement(FeedbackView,null),
       view==="list"&&tab==="events"&&evView==="list"&&React.createElement(EventsView,{events,meinBezirk:mBez,onDelete:handleDelEv}),
       view==="list"&&tab==="events"&&evView==="form"&&React.createElement(EventForm,{initial:editEv,onSave:handleSaveEv,onCancel:()=>{setEvView("list");setEditEv(null);},saving}),
@@ -622,6 +732,7 @@ function App(){
         )
       )
     ),
+    modal==="fbFlyer"&&React.createElement(FlyerZone,{title:"Fortbildungsflyer einlesen",onFile:processFbFlyer,onClose:()=>setModal("")}),
     modal==="orgFlyer"&&React.createElement(FlyerZone,{title:"Organisations-Flyer einlesen",onFile:processOrgFlyer,onClose:()=>setModal("")}),
     modal==="evFlyer"&&React.createElement(FlyerZone,{title:"Veranstaltungsflyer einlesen",onFile:processEvFlyer,onClose:()=>setModal("")}),
     
