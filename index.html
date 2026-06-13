@@ -410,7 +410,7 @@ function EventsView({events,meinBezirk,onDelete}){
 }
 
 function FeedbackView(){
-  const [form,setForm]=React.useState({name:"",kategorie:"Verbesserungsvorschlag",text:""});
+  const [form,setForm]=React.useState({name:"",email:"",kategorie:"Verbesserungsvorschlag",text:""});
   const [sent,setSent]=React.useState(false);
   const [sending,setSending]=React.useState(false);
   const [error,setError]=React.useState("");
@@ -425,7 +425,8 @@ function FeedbackView(){
       const{error:err}=await sb.from("feedback").insert({
         kategorie:form.kategorie,
         text:form.text,
-        name:form.name||null
+        name:form.name||null,
+        email:form.email||null
       });
       if(err)throw new Error(err.message);
       setSent(true);
@@ -459,7 +460,38 @@ function FeedbackView(){
     React.createElement("textarea",{style:{...inp,height:120,resize:"vertical"},value:form.text,onChange:e=>set("text",e.target.value),placeholder:"Deine Ideen, Anregungen oder Fehlerhinweise…"}),
     React.createElement("label",{style:lbl},"Name (freiwillig)"),
     React.createElement("input",{style:inp,value:form.name,onChange:e=>set("name",e.target.value),placeholder:"Dein Name"}),
+    React.createElement("label",{style:lbl},"E-Mail für Rückfragen (freiwillig)"),
+    React.createElement("input",{style:inp,type:"email",value:form.email,onChange:e=>set("email",e.target.value),placeholder:"deine@email.de"}),
     React.createElement("button",{onClick:handleSend,disabled:sending,style:{marginTop:16,background:"#3a7d44",color:"#fff",border:"none",borderRadius:6,padding:"9px 22px",fontSize:13,fontWeight:600,cursor:"pointer"}},sending?"Wird gespeichert…":"💬 Feedback senden")
+  );
+}
+
+const APP_PASSWORD = "tamajatest";
+
+function LoginScreen({onLogin}){
+  const [pw,setPw]=React.useState("");
+  const [error,setError]=React.useState(false);
+  const check=()=>{
+    if(pw===APP_PASSWORD){sessionStorage.setItem("tmj-auth","1");onLogin();}
+    else{setError(true);setPw("");}
+  };
+  return React.createElement("div",{style:{minHeight:"100vh",background:"#F0EDE8",display:"flex",alignItems:"center",justifyContent:"center"}},
+    React.createElement("div",{style:{background:"#FDFBF8",border:"1px solid #D8D2C8",borderRadius:14,padding:36,width:320,textAlign:"center",boxShadow:"0 4px 20px rgba(0,0,0,0.1)"}},
+      React.createElement("img",{src:"https://tamaja.de/wp-content/uploads/2023/11/Tamaja_BildWortmarke_gruen_rgb-Copy-3.svg",alt:"Tamaja",style:{height:40,marginBottom:8},onError:e=>e.target.style.display="none"}),
+      React.createElement("h2",{style:{margin:"12px 0 4px",fontSize:18,fontWeight:700}},"Infothek"),
+      React.createElement("p",{style:{color:"#7A736A",fontSize:13,marginBottom:20}},"Bitte Passwort eingeben"),
+      error&&React.createElement("div",{style:{background:"#fde8e8",border:"1px solid #f5c6c6",borderRadius:6,padding:"8px 12px",marginBottom:12,fontSize:12,color:"#C0392B"}},"Falsches Passwort"),
+      React.createElement("input",{
+        type:"password",
+        style:{width:"100%",padding:"9px 12px",border:"1px solid #D8D2C8",borderRadius:6,background:"#F0EDE8",fontSize:14,outline:"none",boxSizing:"border-box",marginBottom:12},
+        value:pw,
+        onChange:e=>{setPw(e.target.value);setError(false);},
+        onKeyDown:e=>e.key==="Enter"&&check(),
+        placeholder:"Passwort",
+        autoFocus:true
+      }),
+      React.createElement("button",{onClick:check,style:{width:"100%",background:"#3a7d44",color:"#fff",border:"none",borderRadius:6,padding:"10px",fontSize:14,fontWeight:600,cursor:"pointer"}},"Anmelden")
+    )
   );
 }
 
@@ -604,7 +636,12 @@ function App(){
 // create policy "public" on organisationen for all using (true) with check (true);
 // create policy "public" on veranstaltungen for all using (true) with check (true);
 
-ReactDOM.render(React.createElement(App), document.getElementById("root"));
+function Root(){
+  const [auth,setAuth]=React.useState(sessionStorage.getItem("tmj-auth")==="1");
+  if(!auth)return React.createElement(LoginScreen,{onLogin:()=>setAuth(true)});
+  return React.createElement(App,null);
+}
+ReactDOM.render(React.createElement(Root), document.getElementById("root"));
 </script>
 </body>
 </html>
