@@ -564,14 +564,16 @@ function App(){
         ),
         React.createElement("div",{style:{display:"flex",gap:5,alignItems:"center",flexWrap:"wrap"}},
           view==="list"&&tab==="orgs"&&React.createElement(React.Fragment,null,
-            React.createElement("button",{style:hb,onClick:()=>setModal("website")},"🌐 Website"),
-            React.createElement("button",{style:hb,onClick:()=>setModal("orgFlyer")},"📄 Flyer"),
-            React.createElement("button",{style:{...hb,background:"#fff",color:G,border:"none"},onClick:()=>{setEditOrg({...emptyOrg});setView("form");}},"+ Manuell")
+            React.createElement("span",{style:{color:"rgba(255,255,255,0.8)",fontSize:11,fontWeight:600,marginRight:4}},"Organisation hinzufügen:"),
+            React.createElement("button",{style:hb,onClick:()=>setModal("website")},"🌐 Webseite auslesen"),
+            React.createElement("button",{style:hb,onClick:()=>setModal("orgFlyer")},"📄 Flyer auslesen"),
+            React.createElement("button",{style:{...hb,background:"#fff",color:G,border:"none"},onClick:()=>{setEditOrg({...emptyOrg});setView("form");}},"✏️ Manuell eintragen")
           ),
           view==="list"&&tab==="events"&&React.createElement(React.Fragment,null,
             React.createElement("select",{value:mBez,onChange:e=>setMBez(e.target.value),style:hb},BEZIRKE.map(b=>React.createElement("option",{key:b},b))),
-            React.createElement("button",{style:hb,onClick:()=>setModal("evFlyer")},"📄 Flyer"),
-            React.createElement("button",{style:{...hb,background:"#fff",color:G,border:"none"},onClick:()=>{setEditEv({...emptyEv});setEvView("form");}},"+ Manuell")
+            React.createElement("span",{style:{color:"rgba(255,255,255,0.8)",fontSize:11,fontWeight:600,marginRight:4}},"Veranstaltung hinzufügen:"),
+            React.createElement("button",{style:hb,onClick:()=>setModal("evFlyer")},"📄 Flyer auslesen"),
+            React.createElement("button",{style:{...hb,background:"#fff",color:G,border:"none"},onClick:()=>{setEditEv({...emptyEv});setEvView("form");}},"✏️ Manuell eintragen")
           ),
           view!=="list"&&React.createElement("button",{onClick:()=>{setView("list");setEditOrg(null);setDetailOrg(null);},style:hb},"← Zurück")
         )
